@@ -1,11 +1,15 @@
-const fs = require("fs");
-const path = require("path");
+import { readFileSync } from "fs";
+import { resolve } from "path";
 
-const { chromium } = require("@playwright/test");
+import { chromium } from "@playwright/test";
 
 const browserPath = "/usr/bin/brave-browser";
-const template = fs.readFileSync(
-    path.resolve(process.cwd(), "assets", "template.html"), 'utf-8'
+const browser = await chromium.launch({
+    executablePath: browserPath,
+});
+
+const template = readFileSync(
+    resolve(process.cwd(), "assets", "template.html"), 'utf-8'
 );
 
 /**
@@ -14,18 +18,13 @@ const template = fs.readFileSync(
  * @returns {Promise<Buffer>}
  */
 async function render(expression) {
-    const browser = await chromium.launch({
-        executablePath: browserPath,
-    });
     const page = await browser.newPage();
 
     try {
         await page.setContent(template);
 
         await page.evaluate((expression) => {
-            katex.render(expression, document.querySelector("#katex"), {
-                throwOnError: true
-            });
+            katex.render(expression, document.querySelector("#katex"));
         }, expression);
 
         await page.waitForSelector("#katex");
@@ -38,10 +37,9 @@ async function render(expression) {
         return image;
     } finally {
         await page.close();
-        await browser.close();
     }
 }
 
-module.exports = {
+export {
     render
 }

@@ -1,6 +1,6 @@
-const { Client, IntentsBitField } = require("discord.js");
+import { Client, IntentsBitField } from "discord.js";
 
-const katex = require('./tools/katex.js');
+import { render } from './tools/katex.js';
 
 const client = new Client({
     intents: [
@@ -18,12 +18,14 @@ client.on("interactionCreate", async (interaction) => {
         return;
     }
 
+    const start = Date.now();
+
     try {
         switch (interaction.commandName) {
             case "evaluate": {
                 try {
                     const expression = interaction.options.getString('expression');
-                    const image = await katex.render(expression);
+                    const image = await render(expression);
 
                     await interaction.reply({
                         files: [{ attachment: image, name: "latex.png" }]
@@ -37,6 +39,12 @@ client.on("interactionCreate", async (interaction) => {
     } catch (error) {
         console.log(`${error.name}: ${error.message}`);
     }
+
+    const end = Date.now();
+
+    console.log(
+        `The ${interaction.commandName} command has completed within ${end - start}ms.`
+    );
 });
 
 client.login(process.env.APPLICATION_TOKEN);
