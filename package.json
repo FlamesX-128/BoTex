@@ -1,0 +1,26 @@
+{
+    "name": "botex",
+    "version": "1.0.0",
+    "description": "This bot allows rendering LaTeX expressions directly in Discord, making it easier to visualize mathematical formulas and scientific notation.",
+    "main": "src/main.js",
+    "scripts": {
+        "build": "node --env-file=.env src/register.js",
+        "start": "node --env-file=.env src/main.js"
+    },
+    "keywords": [
+        "discord",
+        "bot",
+        "katex",
+        "latex"
+    ],
+    "author": "FlamesX-128",
+    "license": "MIT",
+    "dependencies": {
+        "@playwright/test": "^1.48.2",
+        "discord.js": "14.16.3",
+        "require-all": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/require-all": "^3.0.6"
+    }
+}
