@@ -25,6 +25,7 @@ async function render(expression) {
 
         await page.evaluate((expression) => {
             katex.render(expression, document.querySelector("#katex"), {
+                displayMode: true,
                 throwOnError: false
             });
         }, expression);
