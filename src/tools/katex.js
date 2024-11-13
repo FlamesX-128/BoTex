@@ -25,8 +25,10 @@ async function render(expression) {
 
         await page.evaluate((expression) => {
             katex.render(expression, document.querySelector("#katex"), {
+                errorColor: '#949ba4',
                 displayMode: true,
-                throwOnError: false
+                throwOnError: false,
+                trust: false
             });
         }, expression);
 
