@@ -12,9 +12,15 @@ const commands = [
             }
         ],
         description: 'Renders LaTeX expressions into image.',
-        integration_types: [1],
+        integration_types: [0, 1],
         name: 'evaluate',
-    }
+    },
+    {
+        contexts: [0, 1, 2],
+        integration_types: [0, 1],
+        name: 'evaluate',
+        type: 3,
+    },
 ];
 
 const rest = new REST().setToken(process.env.APPLICATION_TOKEN);
